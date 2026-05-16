@@ -48,11 +48,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // AI 피드백 버튼 이벤트
-    document.getElementById('ai-feedback-btn').addEventListener('click', getAIFeedback);
+    document.getElementById('ai-feedback-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        getAIFeedback();
+    });
 
-    // 모달 닫기 이벤트
-    document.querySelector('.close-modal').onclick = () => {
+    // 모달 닫기 이벤트 (X 버튼)
+    document.querySelector('.close-modal').onclick = (e) => {
+        e.stopPropagation();
         document.getElementById('ai-modal').style.display = 'none';
+    };
+
+    // 모달 바깥쪽 클릭 시 닫기
+    window.onclick = (event) => {
+        const modal = document.getElementById('ai-modal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     };
 });
 
@@ -358,7 +371,8 @@ async function getAIFeedback() {
     }
 
     modal.style.display = 'block';
-    resultContainer.innerHTML = "<p>🤖 Gemini AI가 업무를 분석하고 조언을 작성 중입니다... (약 5~10초 소요)</p>";
+    // 모달이 열릴 때 결과창 초기화 및 로딩 메시지
+    resultContainer.innerHTML = "<p style='color: blue; font-weight: bold;'>🤖 Gemini AI가 업무를 분석하고 조언을 작성 중입니다... (약 5~10초 소요)</p>";
 
     const aiPrompt = `당신은 초등학교 수석 교사 업무 도우미입니다. 다음은 교사가 작성한 오늘의 업무 리스트입니다:\n\n${allTasks}\n\n이 내용을 분석하여 다음 3가지 항목을 포함한 HTML 표(Table) 형식으로 조언해 주세요. 
     1. 중요도(상/중/하) 2. 업무 핵심 요약 3. 효율적인 수행 팁. 
