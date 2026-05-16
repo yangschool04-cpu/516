@@ -69,29 +69,26 @@ function initMonthTabs() {
     });
 }
 
-// 생성된 자연 환경 사진의 절대 경로
-const basePath = 'file:///C:/Users/교육과정부장/.gemini/antigravity/brain/1742f1e7-0aae-44bf-98a2-d3be4eba1512';
-
-// 계절별 실제 자연 환경 고화질 사진 (1~12월)
+// 계절별 실제 자연 환경 고화질 사진 (assets 폴더 경로)
 const natureBackgrounds = {
-    1: `url('${basePath}/bg_winter_1778913366537.png')`,
-    2: `url('${basePath}/bg_winter_1778913366537.png')`,
-    3: `url('${basePath}/bg_spring_1778913222554.png')`,
-    4: `url('${basePath}/bg_spring_1778913222554.png')`,
-    5: `url('${basePath}/bg_spring_1778913222554.png')`,
-    6: `url('${basePath}/bg_summer_1778913293586.png')`,
-    7: `url('${basePath}/bg_summer_1778913293586.png')`,
-    8: `url('${basePath}/bg_summer_1778913293586.png')`,
-    9: `url('${basePath}/bg_autumn_1778913309065.png')`,
-    10: `url('${basePath}/bg_autumn_1778913309065.png')`,
-    11: `url('${basePath}/bg_autumn_1778913309065.png')`,
-    12: `url('${basePath}/bg_winter_1778913366537.png')`
+    1: "url('assets/bg_winter.png')",
+    2: "url('assets/bg_winter.png')",
+    3: "url('assets/bg_spring.png')",
+    4: "url('assets/bg_spring.png')",
+    5: "url('assets/bg_spring.png')",
+    6: "url('assets/bg_summer.png')",
+    7: "url('assets/bg_summer.png')",
+    8: "url('assets/bg_summer.png')",
+    9: "url('assets/bg_autumn.png')",
+    10: "url('assets/bg_autumn.png')",
+    11: "url('assets/bg_autumn.png')",
+    12: "url('assets/bg_winter.png')"
 };
 
-// 빨간날에 들어갈 귀여운 일러스트 목록
+// 빨간날에 들어갈 귀여운 일러스트 목록 (상대 경로)
 const cuteImages = [
-    `${basePath}/cute_holiday_1_1778913527981.png`,
-    `${basePath}/cute_holiday_2_1778913546392.png`
+    "assets/cute_holiday_1.png",
+    "assets/cute_holiday_2.png"
 ];
 
 // 월 변경 처리
