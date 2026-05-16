@@ -60,13 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('ai-modal').style.display = 'none';
     };
 
-    // 모달 바깥쪽 클릭 시 닫기
-    window.onclick = (event) => {
-        const modal = document.getElementById('ai-modal');
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
+    // (수정) 모달 바깥쪽 클릭 시 닫히는 기능은 오작동 방지를 위해 제거했습니다.
+    // window.onclick = ... (삭제됨)
 });
 
 // 하단 월 선택 탭 생성
@@ -403,7 +398,17 @@ async function getAIFeedback() {
         
         // 마크다운 태그가 포함되어 있다면 제거
         const cleanedHtml = aiResponse.replace(/```html|```/g, "").trim();
-        resultContainer.innerHTML = cleanedHtml;
+        
+        // 결과 표와 함께 하단에 닫기 버튼 추가 (실수로 닫히는 것 방지)
+        resultContainer.innerHTML = `
+            ${cleanedHtml}
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="button" onclick="document.getElementById('ai-modal').style.display='none'" 
+                        style="padding: 10px 30px; border-radius: 8px; border: none; background-color: #eee; cursor: pointer; font-weight: bold;">
+                    조언 창 닫기
+                </button>
+            </div>
+        `;
 
     } catch (error) {
         console.error("AI 분석 오류:", error);
