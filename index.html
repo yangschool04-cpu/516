@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선생님 월별 스케줄표</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 환경변수 파일 먼저 로드 -->
+    <script src="env.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="title-container">
+                <button id="prev-year" class="btn-year" title="이전 연도">◀</button>
+                <h1 id="current-month-title">2026년 1월 스케줄표</h1>
+                <button id="next-year" class="btn-year" title="다음 연도">▶</button>
+            </div>
+            <div class="header-buttons">
+                <button id="ai-feedback-btn" class="btn-ai">🤖 AI 업무 조언</button>
+                <button id="print-btn" class="btn-sync">인쇄 / PDF 저장</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- 요일 헤더 -->
+            <div class="weekdays">
+                <div>일</div>
+                <div>월</div>
+                <div>화</div>
+                <div>수</div>
+                <div>목</div>
+                <div>금</div>
+                <div>토</div>
+            </div>
+            <!-- 달력 빈칸 -->
+            <div id="calendar-grid" class="calendar-grid">
+                <!-- 자바스크립트로 날짜 칸이 생성됩니다 -->
+            </div>
+        </main>
+
+        <footer>
+            <!-- 월 선택 탭 -->
+            <div id="month-tabs" class="month-tabs">
+                <!-- 자바스크립트로 1월~12월 탭이 생성됩니다 -->
+            </div>
+        </footer>
+    </div>
+
+    <!-- 알림 팝업창 컨테이너 -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- AI 피드백 모달창 -->
+    <div id="ai-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>🤖 Gemini AI 업무 분석 결과</h2>
+            <div id="ai-result-table-container">
+                <!-- 여기에 AI 분석 결과 표가 생성됩니다 -->
+                <p>분석 중입니다... 잠시만 기다려 주세요.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
