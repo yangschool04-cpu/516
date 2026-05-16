@@ -327,11 +327,20 @@ function showNotification(message) {
 async function getAIFeedback() {
     const modal = document.getElementById('ai-modal');
     const resultContainer = document.getElementById('ai-result-table-container');
-    const apiKey = window.ENV ? window.ENV.GEMINI_API_KEY : '';
     
+    // 1. env.js에서 키 찾기 -> 2. 로컬스토리지에서 기존 저장된 키 찾기
+    let apiKey = (window.ENV && window.ENV.GEMINI_API_KEY) ? window.ENV.GEMINI_API_KEY : localStorage.getItem('GEMINI_API_KEY');
+    
+    // 키가 없으면 사용자에게 직접 입력받기 (배포 환경 대응)
     if (!apiKey) {
-        alert("API 키가 설정되지 않았습니다. env.js 파일을 확인해 주세요.");
-        return;
+        const userInput = prompt("🤖 Gemini AI 조언을 받으려면 API 키가 필요합니다.\n\n구글에서 발급받은 키를 입력해 주세요. 입력하신 키는 선생님의 브라우저(localStorage)에만 안전하게 저장됩니다:");
+        if (userInput && userInput.trim() !== "") {
+            apiKey = userInput.trim();
+            localStorage.setItem('GEMINI_API_KEY', apiKey);
+        } else {
+            alert("API 키가 없으면 AI 조언 기능을 사용할 수 없습니다.");
+            return;
+        }
     }
 
     // 현재 페이지(달력)에 입력된 모든 업무 내용 수집
