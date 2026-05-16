@@ -360,16 +360,17 @@ async function getAIFeedback() {
     modal.style.display = 'block';
     resultContainer.innerHTML = "<p>🤖 Gemini AI가 업무를 분석하고 조언을 작성 중입니다... (약 5~10초 소요)</p>";
 
-    const prompt = `당신은 초등학교 수석 교사 업무 도우미입니다. 다음은 교사가 작성한 오늘의 업무 리스트입니다:\n\n${allTasks}\n\n이 내용을 분석하여 다음 3가지 항목을 포함한 HTML 표(Table) 형식으로 조언해 주세요. 
+    const aiPrompt = `당신은 초등학교 수석 교사 업무 도우미입니다. 다음은 교사가 작성한 오늘의 업무 리스트입니다:\n\n${allTasks}\n\n이 내용을 분석하여 다음 3가지 항목을 포함한 HTML 표(Table) 형식으로 조언해 주세요. 
     1. 중요도(상/중/하) 2. 업무 핵심 요약 3. 효율적인 수행 팁. 
     표의 클래스명은 'ai-table'로 설정해 주세요. 한국어로 답변해 주세요. HTML 코드만 출력해 주세요.`;
 
     try {
+        console.log("Gemini API 호출 시작...");
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
+                contents: [{ parts: [{ text: aiPrompt }] }]
             })
         });
 
@@ -379,7 +380,12 @@ async function getAIFeedback() {
             throw new Error(data.error.message);
         }
         
+        if (!data.candidates || data.candidates.length === 0) {
+            throw new Error("AI가 답변을 생성하지 못했습니다. (내용이 너무 짧거나 안전 필터에 의해 차단되었을 수 있습니다.)");
+        }
+        
         const aiResponse = data.candidates[0].content.parts[0].text;
+        console.log("AI 답변 수신 성공");
         
         // 마크다운 태그가 포함되어 있다면 제거
         const cleanedHtml = aiResponse.replace(/```html|```/g, "").trim();
